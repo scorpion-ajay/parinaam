@@ -1,9 +1,12 @@
-from django.shortcuts import render
-from .models import Classes
+from django.views import generic
+from .models import Classes, Marks
 
 
 # Create your views here.
-def index(request):
-    all_classes = Classes.objects.all()
-    context = {'all_classes': all_classes}
-    return render(request, 'Classes/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'Classes/index.html'
+
+    context_object_name = 'all_albums'
+
+    def get_queryset(self):
+        return Classes.objects.all()

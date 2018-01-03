@@ -1,7 +1,7 @@
-{% if all_classes %}
+{% if all_albums %}
     <h2>Here are all the classes :)</h2>
     <ul>
-        {% for class in all_classes %}
+        {% for class in all_albums %}
             <li>
                 <a href="/Classes/{{ class.id }}/">{{class.discipline}}  -  {{ class.batch }}   {{class.subject}}</a>
             </li>

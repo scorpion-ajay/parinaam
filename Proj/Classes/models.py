@@ -13,6 +13,6 @@ class Classes(models.Model):
 
 class Marks(models.Model):
     my_class = models.ForeignKey(Classes, on_delete=models.CASCADE)
-    marks1 = models.IntegerField()
-    marks2 = models.IntegerField()
-    marks3 = models.IntegerField()
+    marks1 = models.CharField(max_length=100,default='NA')
+    marks2 = models.CharField(max_length=100,default='NA')
+    marks3 = models.CharField(max_length=100,default='NA')
