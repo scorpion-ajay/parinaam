@@ -1,0 +1,12 @@
+{% if all_classes %}
+    <h2>Here are all the classes :)</h2>
+    <ul>
+        {% for class in all_classes %}
+            <li>
+                <a href="/Classes/{{ class.id }}/">{{class.discipline}}  -  {{ class.batch }}   {{class.subject}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3>Oops, You don't have any classes :(</h3>
+{% endif %}
