@@ -8,11 +8,16 @@ class Classes(models.Model):
     subject = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.discipline + '-' + self.batch
+        return self.discipline + '-' + self.batch + '-' + self.subject
+
+
+class ExamName(models.Model):
+    my_class = models.ForeignKey(Classes, on_delete=models.CASCADE)
+    exam_name = models.CharField(max_length=100, default='Sessional-1')
 
 
 class Marks(models.Model):
-    my_class = models.ForeignKey(Classes, on_delete=models.CASCADE)
-    marks1 = models.CharField(max_length=100,default='NA')
-    marks2 = models.CharField(max_length=100,default='NA')
-    marks3 = models.CharField(max_length=100,default='NA')
+    this_exam = models.ForeignKey(Classes, on_delete=models.CASCADE)
+    # student_name = models.CharField(max_length=100, default='example : ajay verma')
+    roll = models.CharField(max_length=100, default='ex : 2601')
+    marks_obt = models.CharField(max_length=100, default='ex : 50')
