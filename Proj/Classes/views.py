@@ -6,7 +6,7 @@ from .models import Classes, Marks
 class IndexView(generic.ListView):
     template_name = 'Classes/index.html'
 
-    context_object_name = 'all_albums'
+    context_object_name = 'all_classes'
 
     def get_queryset(self):
         return Classes.objects.all()
