@@ -3,7 +3,7 @@
     <ul>
         {% for class in all_classes %}
             <li>
-                <a href="/Classes/{{ class.id }}/">{{class.discipline}}  -  {{ class.batch }}   {{class.subject}}</a>
+                <a href="{% url 'Classes:marks' class.id %}">{{class.discipline}}  -  {{ class.batch }}   {{class.subject}}  {{class.exam_name}}</a>
             </li>
         {% endfor %}
     </ul>

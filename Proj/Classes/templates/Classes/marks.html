@@ -1,0 +1,9 @@
+{% if classes.marks_set.all %}
+    <ul>
+        {% for details in classes.marks_set.all %}
+            <li>{{ details.roll }} - {{ details.marks_obt }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3>Oops, You don't have any marks here :(</h3>
+{% endif %}

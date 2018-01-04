@@ -1,5 +1,5 @@
 from django.views import generic
-from .models import Classes, Marks
+from .models import Classes
 
 
 # Create your views here.
@@ -10,3 +10,8 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         return Classes.objects.all()
+
+
+class MarksView(generic.DetailView):
+    model = Classes
+    template_name = 'Classes/marks.html'

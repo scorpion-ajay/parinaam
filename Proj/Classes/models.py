@@ -1,23 +1,25 @@
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
 class Classes(models.Model):
-    batch = models.CharField(max_length=100)
-    discipline = models.CharField(max_length=100)
-    subject = models.CharField(max_length=100)
+    batch = models.CharField(max_length=100, default='2k15')
+    discipline = models.CharField(max_length=100, default='IT')
+    subject = models.CharField(max_length=100, default='data structures')
+    exam_name = models.CharField(max_length=100, default='Sessional-1')
+
+    def get_absolute_url(self):
+        return reverse('Classes:marks', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return self.discipline + '-' + self.batch + '-' + self.subject
-
-
-class ExamName(models.Model):
-    my_class = models.ForeignKey(Classes, on_delete=models.CASCADE)
-    exam_name = models.CharField(max_length=100, default='Sessional-1')
+        return self.discipline + '-' + self.batch + '-' + self.subject + '-' + self.exam_name
 
 
 class Marks(models.Model):
-    this_exam = models.ForeignKey(Classes, on_delete=models.CASCADE)
-    # student_name = models.CharField(max_length=100, default='example : ajay verma')
-    roll = models.CharField(max_length=100, default='ex : 2601')
-    marks_obt = models.CharField(max_length=100, default='ex : 50')
+    classes = models.ForeignKey(Classes, on_delete=models.CASCADE)
+    roll = models.CharField(max_length=100)
+    marks_obt = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.roll + '-' + self.marks_obt
