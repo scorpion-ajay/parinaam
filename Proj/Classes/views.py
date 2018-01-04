@@ -1,5 +1,6 @@
 from django.views import generic
 from .models import Classes
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 # Create your views here.
@@ -15,3 +16,8 @@ class IndexView(generic.ListView):
 class MarksView(generic.DetailView):
     model = Classes
     template_name = 'Classes/marks.html'
+
+
+class ClassesCreate(CreateView):
+    model = Classes
+    fields = ['batch','discipline','subject','exam_name']

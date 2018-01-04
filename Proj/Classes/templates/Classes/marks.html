@@ -1,9 +1,15 @@
-{% if classes.marks_set.all %}
-    <ul>
-        {% for details in classes.marks_set.all %}
-            <li>{{ details.roll }} - {{ details.marks_obt }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <h3>Oops, You don't have any marks here :(</h3>
-{% endif %}
+<form action="{%url 'Classes:marks' classes.id %}">
+    <a href="{% url 'Classes:index' %}">Go to home</a><br>
+    {% csrf_token %}
+    {% if classes.marks_set.all %}
+        <ul>
+            {% for detail in classes.marks_set.all %}
+                <li>{{detail.roll}} - {{detail.marks_obt}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>You have not any added marks yet :(</h3>
+    {% endif %}
+    <input type="number" value="" name="num_of_stud">
+    <input type="submit" value="Add Students">
+</form>
