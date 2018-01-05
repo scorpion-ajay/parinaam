@@ -3,7 +3,13 @@
     <ul>
         {% for class in classes %}
             <li>
-                <a href="{% url 'Classes:marks' class.id %}">{{class.discipline}}  -  {{ class.batch }}   {{class.subject}}  {{class.exam_name}}</a>
+                <a href="{% url 'Classes:marks' class.id %}">{{class.discipline}} - {{ class.batch }} {{class.subject}} {{class.exam_name}}</a>
+                <form action="{% url 'Classes:delete-class' class.id %}">
+                    <input type="submit" value="Delete">
+                </form>
+                <form action="{% url 'Classes:update-class' class.id %}">
+                    <input type="submit" value="Update">
+                </form>
             </li>
         {% endfor %}
     </ul>

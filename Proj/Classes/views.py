@@ -1,7 +1,7 @@
 from django.views import generic
 from .models import Classes, Marks
 from .forms import ClassesForm, MarksForm
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
@@ -10,6 +10,16 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 def index(request):
     classes = Classes.objects.all
     return render(request, 'Classes/index.html', {'classes': classes})
+
+
+def update_class(request, classes_id):
+    classes = get_object_or_404(Classes, pk=classes_id)
+    form = ClassesForm(request.POST or None, instance=classes)
+    if form.is_valid():
+        classes = form.save(commit=False)
+        classes.save()
+        return redirect(request, 'Classes/marks.html', {'classes': classes})
+    return render(request, 'Classes/classes_form.html', {'form': form})
 
 
 def marks(request, classes_id):
@@ -52,3 +62,16 @@ def add_marks(request, classes_id):
     }
     return render(request, 'Classes/marks_form.html', context)
 
+
+def delete_classes(request, classes_id):
+    classes = Classes.objects.get(pk=classes_id)
+    classes.delete()
+    classes = Classes.objects.all
+    return render(request, 'Classes/index.html', {'classes': classes})
+
+
+def delete_marks(request, classes_id, marks_id):
+    classes = get_object_or_404(Classes, pk=classes_id)
+    marks = Marks.objects.get(pk=marks_id)
+    marks.delete()
+    return render(request, 'Classes/marks.html', {'classes': classes})

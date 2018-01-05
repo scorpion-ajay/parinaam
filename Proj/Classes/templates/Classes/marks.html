@@ -2,7 +2,12 @@
 {% if classes.marks_set.all %}
     <ul>
         {% for detail in classes.marks_set.all %}
-            <li>{{detail.roll}} - {{detail.marks_obt}}</li>
+            <li>
+                {{detail.roll}} - {{detail.marks_obt}}
+                <form action="{% url 'Classes:delete-marks' classes.id detail.id %}">
+                    <input type="submit" value="Delete">
+                </form>
+            </li>
         {% endfor %}
     </ul>
 {% else %}

@@ -10,9 +10,18 @@ urlpatterns = [
     # /Classes/<classes_id>
     url(r'^(?P<classes_id>[0-9]+)/$', views.marks, name='marks'),
 
-    # /add-class/
+    # /Classes/add-class/
     url(r'^add-class/$', views.add_class, name='add-class'),
 
-    # /add-marks/
+    # /Classes/add-marks/
     url(r'^(?P<classes_id>[0-9]+)/add-marks/$', views.add_marks, name='add-marks'),
+
+    # /Classes/delete-class/
+    url(r'^(?P<classes_id>[0-9]+)/delete-class/$', views.delete_classes, name='delete-class'),
+
+    # /Classes/delete-marks/
+    url(r'^(?P<classes_id>[0-9]+)/delete-marks/(?P<marks_id>[0-9]+)/$', views.delete_marks, name='delete-marks'),
+
+    # /Classes/<classes_id>/update/
+    url(r'^(?P<classes_id>[0-9]+)/update-class/$', views.update_class, name='update-class'),
 ]
