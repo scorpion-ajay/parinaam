@@ -1,7 +1,7 @@
-{% if all_classes %}
+{% if classes %}
     <h2>Here are all the classes :)</h2>
     <ul>
-        {% for class in all_classes %}
+        {% for class in classes %}
             <li>
                 <a href="{% url 'Classes:marks' class.id %}">{{class.discipline}}  -  {{ class.batch }}   {{class.subject}}  {{class.exam_name}}</a>
             </li>
@@ -10,6 +10,4 @@
 {% else %}
     <h3>Oops, You don't have any classes :(</h3>
 {% endif %}
-<div>
-    <a href="{% url 'Classes:add-classes' %}">Add class</a>
-</div>
+<a href="{% url 'Classes:add-class' %}">Add Class</a>

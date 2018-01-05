@@ -9,9 +9,6 @@ class Classes(models.Model):
     subject = models.CharField(max_length=100, default='data structures')
     exam_name = models.CharField(max_length=100, default='Sessional-1')
 
-    def get_absolute_url(self):
-        return reverse('Classes:marks', kwargs={'pk': self.pk})
-
     def __str__(self):
         return self.discipline + '-' + self.batch + '-' + self.subject + '-' + self.exam_name
 

@@ -1,0 +1,8 @@
+<form action="" enctype="multipart/form-data" method="post">
+    {% if error_message %}
+        <h3>{{ error_message }}</h3>
+    {% endif %}
+    {% csrf_token %}
+    {% include 'Classes/form-template.html' %}
+    <button type="submit">Submit</button>
+</form>
