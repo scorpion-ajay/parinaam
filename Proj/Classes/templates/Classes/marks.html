@@ -1,4 +1,4 @@
-<a href="{% url 'Classes:index' %}">Go to home</a><br>
+<a href="{% url 'Classes:index' %}">Go to classes</a><br>
 {% if classes.marks_set.all %}
     <ul>
         {% for detail in classes.marks_set.all %}
@@ -6,6 +6,9 @@
                 {{detail.roll}} - {{detail.marks_obt}}
                 <form action="{% url 'Classes:delete-marks' classes.id detail.id %}">
                     <input type="submit" value="Delete">
+                </form>
+                <form action="{% url 'Classes:update-marks' classes.id detail.id %}">
+                    <input type="submit" value="Update">
                 </form>
             </li>
         {% endfor %}

@@ -24,4 +24,7 @@ urlpatterns = [
 
     # /Classes/<classes_id>/update/
     url(r'^(?P<classes_id>[0-9]+)/update-class/$', views.update_class, name='update-class'),
+
+    # /Classes/<classes_id>/update/<marks_id>
+    url(r'^(?P<classes_id>[0-9]+)/update-marks/(?P<marks_id>[0-9]+)/$', views.update_marks, name='update-marks'),
 ]

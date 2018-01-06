@@ -1,12 +1,14 @@
 from django.views import generic
 from .models import Classes, Marks
+from django.urls import reverse
 from .forms import ClassesForm, MarksForm
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+app_name = 'Classes'
 
 
 # Create your views here.
-
 def index(request):
     classes = Classes.objects.all
     return render(request, 'Classes/index.html', {'classes': classes})
@@ -18,8 +20,19 @@ def update_class(request, classes_id):
     if form.is_valid():
         classes = form.save(commit=False)
         classes.save()
-        return redirect(request, 'Classes/marks.html', {'classes': classes})
+        return HttpResponseRedirect(reverse('Classes:index'))
     return render(request, 'Classes/classes_form.html', {'form': form})
+
+
+def update_marks(request, classes_id, marks_id):
+    classes = get_object_or_404(Classes, pk=classes_id)
+    marks = get_object_or_404(Marks, pk=marks_id)
+    form = MarksForm(request.POST or None, instance=marks)
+    if form.is_valid():
+        marks_form = form.save(commit=False)
+        marks_form.save()
+        return HttpResponseRedirect(reverse('Classes:marks', args=(classes_id,)))
+    return render(request, 'Classes/marks_form.html', {'form': form})
 
 
 def marks(request, classes_id):
@@ -67,11 +80,10 @@ def delete_classes(request, classes_id):
     classes = Classes.objects.get(pk=classes_id)
     classes.delete()
     classes = Classes.objects.all
-    return render(request, 'Classes/index.html', {'classes': classes})
+    return HttpResponseRedirect(reverse('Classes:index'))
 
 
 def delete_marks(request, classes_id, marks_id):
-    classes = get_object_or_404(Classes, pk=classes_id)
     marks = Marks.objects.get(pk=marks_id)
     marks.delete()
-    return render(request, 'Classes/marks.html', {'classes': classes})
+    return HttpResponseRedirect(reverse('Classes:marks', args=(classes_id,)))
