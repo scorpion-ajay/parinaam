@@ -10,7 +10,7 @@ app_name = 'Classes'
 
 # Create your views here.
 def index(request):
-    classes = Classes.objects.all
+    classes = Classes.objects.all().order_by('discipline')
     return render(request, 'Classes/index.html', {'classes': classes})
 
 
@@ -37,8 +37,8 @@ def update_marks(request, classes_id, marks_id):
 
 def marks(request, classes_id):
     classes = get_object_or_404(Classes, pk=classes_id)
-    marks = classes.marks_set.all
-    return render(request, 'Classes/marks.html', {'classes': classes, 'marks': marks})
+    marks_qs = Marks.objects.all().filter(classes=classes_id).order_by('roll')
+    return render(request, 'Classes/marks.html', {'classes': classes, 'marks_qs': marks_qs})
 
 
 def add_class(request):

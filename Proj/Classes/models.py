@@ -15,8 +15,8 @@ class Classes(models.Model):
 
 class Marks(models.Model):
     classes = models.ForeignKey(Classes, on_delete=models.CASCADE)
-    roll = models.CharField(max_length=100)
-    marks_obt = models.CharField(max_length=100)
+    roll = models.IntegerField()
+    marks_obt = models.IntegerField()
 
     def __str__(self):
         return self.roll + '-' + self.marks_obt
