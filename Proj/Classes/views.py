@@ -46,7 +46,7 @@ def add_class(request):
     if form.is_valid():
         classes = form.save(commit=False)
         classes.save()
-        return render(request, 'Classes/marks.html', {'classes': classes})
+        return HttpResponseRedirect(reverse('Classes:index'))
     return render(request, 'Classes/classes_form.html', {'form': form})
 
 
@@ -68,7 +68,7 @@ def add_marks(request, classes_id):
        marks.roll = form.cleaned_data.get('roll')
        marks.marks_obt = form.cleaned_data.get('marks_obt')
        marks.save()
-       return render(request, 'Classes/marks.html', {'classes': classes})
+       return HttpResponseRedirect(reverse('Classes:marks', args=(classes_id,)))
     context = {
         'classes': classes,
         'form': form,
