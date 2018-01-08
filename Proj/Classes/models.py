@@ -19,4 +19,4 @@ class Marks(models.Model):
     marks_obt = models.IntegerField()
 
     def __str__(self):
-        return self.roll + '-' + self.marks_obt
+        return str(self.roll) + '-' + str(self.marks_obt)

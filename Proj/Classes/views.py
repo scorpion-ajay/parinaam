@@ -1,6 +1,7 @@
 from django.views import generic
 from .models import Classes, Marks
 from django.urls import reverse
+from django.forms.models import modelformset_factory
 from .forms import ClassesForm, MarksForm
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -24,8 +25,32 @@ def update_class(request, classes_id):
     return render(request, 'Classes/classes_form.html', {'form': form})
 
 
+def update_classes(request):
+    ClassesFormset = modelformset_factory(Classes, form=ClassesForm)
+    classes_qs = Classes.objects.all().order_by('batch')
+    formset = ClassesFormset(request.POST or None, queryset=classes_qs)
+    if formset.is_valid():
+        instances = formset.save(commit=False)
+        for instance in instances:
+            instance.save()
+        return HttpResponseRedirect(reverse('Classes:index'))
+    return render(request, 'Classes/formset.html', {'formset': formset})
+
+
+def update_all_marks(request, classes_id):
+    MarksFormset = modelformset_factory(Marks, form=MarksForm)
+    myclass = Classes.objects.get(pk=classes_id)
+    marks_qs = Marks.objects.filter(classes=myclass).order_by('roll')
+    formset = MarksFormset(request.POST or None, queryset=marks_qs)
+    if formset.is_valid():
+        instances = formset.save(commit=False)
+        for instance in instances:
+            instance.save()
+        return HttpResponseRedirect(reverse('Classes:marks', args=(classes_id,)))
+    return render(request, 'Classes/formset.html', {'formset': formset})
+
+
 def update_marks(request, classes_id, marks_id):
-    classes = get_object_or_404(Classes, pk=classes_id)
     marks = get_object_or_404(Marks, pk=marks_id)
     form = MarksForm(request.POST or None, instance=marks)
     if form.is_valid():
@@ -79,7 +104,6 @@ def add_marks(request, classes_id):
 def delete_classes(request, classes_id):
     classes = Classes.objects.get(pk=classes_id)
     classes.delete()
-    classes = Classes.objects.all
     return HttpResponseRedirect(reverse('Classes:index'))
 
 
