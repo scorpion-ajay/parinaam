@@ -26,7 +26,7 @@ def update_class(request, classes_id):
 
 
 def update_classes(request):
-    ClassesFormset = modelformset_factory(Classes, form=ClassesForm)
+    ClassesFormset = modelformset_factory(Classes, form=ClassesForm, extra=0)
     classes_qs = Classes.objects.all().order_by('batch')
     formset = ClassesFormset(request.POST or None, queryset=classes_qs)
     if formset.is_valid():
@@ -37,8 +37,28 @@ def update_classes(request):
     return render(request, 'Classes/formset.html', {'formset': formset})
 
 
+def add_classes(request):
+    ClassesFormset = modelformset_factory(Classes, form=ClassesForm, extra=0)
+    formset = ClassesFormset(request.POST or None)
+    if formset.is_valid():
+        instances = formset.save(commit=False)
+        for form in formset:
+            batch = form.cleaned_data['batch']
+            discipline = form.cleaned_data['discipline']
+            subject = form.cleaned_data['subject']
+            exam_name = form.cleaned_data['exam_name']
+            Classes.objects.create(
+                batch=batch,
+                discipline=discipline,
+                subject=subject,
+                exam_name=exam_name,
+            )
+        return HttpResponseRedirect(reverse('Classes:index'))
+    return render(request, 'Classes/formset.html',{'formset': formset})
+
+
 def update_all_marks(request, classes_id):
-    MarksFormset = modelformset_factory(Marks, form=MarksForm)
+    MarksFormset = modelformset_factory(Marks, form=MarksForm, extra=0)
     myclass = Classes.objects.get(pk=classes_id)
     marks_qs = Marks.objects.filter(classes=myclass).order_by('roll')
     formset = MarksFormset(request.POST or None, queryset=marks_qs)

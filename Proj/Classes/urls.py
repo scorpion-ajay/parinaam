@@ -13,6 +13,9 @@ urlpatterns = [
     # /Classes/add-class/
     url(r'^add-class/$', views.add_class, name='add-class'),
 
+    # /Classes/add-classes/
+    url(r'^add-classes/$', views.add_classes, name='add-classes'),
+
     # /Classes/add-marks/
     url(r'^(?P<classes_id>[0-9]+)/add-marks/$', views.add_marks, name='add-marks'),
 
