@@ -38,22 +38,23 @@ def update_classes(request):
 
 
 def add_classes(request):
-    ClassesFormset = modelformset_factory(Classes, form=ClassesForm, extra=0)
-    formset = ClassesFormset(request.POST or None)
-    if formset.is_valid():
-        instances = formset.save(commit=False)
-        for form in formset:
-            batch = form.cleaned_data['batch']
-            discipline = form.cleaned_data['discipline']
-            subject = form.cleaned_data['subject']
-            exam_name = form.cleaned_data['exam_name']
-            Classes.objects.create(
-                batch=batch,
-                discipline=discipline,
-                subject=subject,
-                exam_name=exam_name,
-            )
-        return HttpResponseRedirect(reverse('Classes:index'))
+    ClassesFormSet = modelformset_factory(Classes, form=ClassesForm, extra=2)
+    formset = ClassesFormSet(request.POST or None, request.FILES or None, queryset=Classes.objects.none())
+    if request.method == 'POST':
+        if formset.is_valid():
+            for f in formset:
+                cd = f.cleaned_data
+                batch = cd.get('batch')
+                discipline = cd.get('discipline')
+                subject = cd.get('subject')
+                exam_name = cd.get('exam_name')
+                Classes.objects.create(
+                    batch=batch,
+                    discipline=discipline,
+                    subject=subject,
+                    exam_name=exam_name,
+                )
+            return HttpResponseRedirect(reverse('Classes:index'))
     return render(request, 'Classes/formset.html',{'formset': formset})
 
 

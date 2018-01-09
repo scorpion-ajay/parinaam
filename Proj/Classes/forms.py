@@ -1,5 +1,5 @@
 from django import forms
-from .models import Classes,Marks
+from .models import Classes, Marks
 
 
 class ClassesForm(forms.ModelForm):

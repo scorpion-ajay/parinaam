@@ -4,10 +4,10 @@ from django.urls import reverse
 
 # Create your models here.
 class Classes(models.Model):
-    batch = models.CharField(max_length=100, default='2k15')
-    discipline = models.CharField(max_length=100, default='IT')
-    subject = models.CharField(max_length=100, default='data structures')
-    exam_name = models.CharField(max_length=100, default='Sessional-1')
+    batch = models.CharField(max_length=100, null=True)
+    discipline = models.CharField(max_length=100, null=True)
+    subject = models.CharField(max_length=100, null=True)
+    exam_name = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.discipline + '-' + self.batch + '-' + self.subject + '-' + self.exam_name
