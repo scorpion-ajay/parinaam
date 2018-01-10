@@ -1,8 +1,9 @@
-from django.views import generic
+from django.views.generic import View
 from .models import Classes, Marks
 from django.urls import reverse
+from django.contrib.auth import authenticate, login
 from django.forms.models import modelformset_factory
-from .forms import ClassesForm, MarksForm
+from .forms import ClassesForm, MarksForm, UserForm
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
@@ -132,3 +133,37 @@ def delete_marks(request, classes_id, marks_id):
     marks = Marks.objects.get(pk=marks_id)
     marks.delete()
     return HttpResponseRedirect(reverse('Classes:marks', args=(classes_id,)))
+
+
+class UserFormView(View):
+    form_class = UserForm
+    template_name = 'Classes/registration_form.html'
+
+    # displays blank form
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    # process form data
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+
+            user = form.save(commit=False)
+
+            # cleaned (normalised) data
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+
+            # return User objects if credentials are correct
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse('Classes:index'))
+        return render(request, self.template_name, {'form': form})

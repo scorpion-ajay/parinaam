@@ -4,6 +4,9 @@ from . import views
 app_name = 'Classes'
 
 urlpatterns = [
+    # Classes/register
+    url(r'^register/$', views.UserFormView.as_view(), name='register'),
+
     # /Classes/
     url(r'^$', views.index, name='index'),
 
