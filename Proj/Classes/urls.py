@@ -1,11 +1,11 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from . import views
 
 app_name = 'Classes'
 
 urlpatterns = [
     # Classes/register
-    url(r'^register/$', views.UserFormView.as_view(), name='register'),
+    url(r'^login/$', views.UserFormView.as_view(), name='login'),
 
     # /Classes/
     url(r'^$', views.index, name='index'),

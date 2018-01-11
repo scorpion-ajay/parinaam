@@ -1,4 +1,5 @@
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
 from .models import Classes, Marks
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
@@ -8,6 +9,11 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRe
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 app_name = 'Classes'
+
+
+@login_required
+def home(request):
+    return render(request, 'Classes/index.html')
 
 
 # Create your views here.
