@@ -13,11 +13,8 @@ urlpatterns = [
     # /Classes/<classes_id>
     url(r'^(?P<classes_id>[0-9]+)/$', views.marks, name='marks'),
 
-    # /Classes/add-class/
-    url(r'^add-class/$', views.add_class, name='add-class'),
-
     # /Classes/add-classes/
-    url(r'^add-classes/$', views.add_classes, name='add-classes'),
+    url(r'^add-classes/(?P<num>[0-9]+)/$', views.add_classes, name='add-classes'),
 
     # /Classes/add-marks/
     url(r'^(?P<classes_id>[0-9]+)/add-marks/$', views.add_marks, name='add-marks'),

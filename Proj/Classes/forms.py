@@ -23,3 +23,7 @@ class MarksForm(forms.ModelForm):
     class Meta:
         model = Marks
         fields = ['roll', 'marks_obt']
+
+
+class AddClasses(forms.Form):
+    num = forms.IntegerField(label='Add number of classes to be added..')

@@ -17,6 +17,13 @@
 {% else %}
     <h3>Oops, You don't have any classes :(</h3>
 {% endif %}
-<a href="{% url 'Classes:add-class' %}">Add Class</a>
-<a href="{% url 'Classes:add-classes' %}">Add Classes</a>
+<label>Number of classes to add : </label>
+<input type="number" id="num">
+<button onclick="myFxn()">Add classes</button>
 <a href="{% url 'Classes:update-classes' %}">Update All Classes</a>
+<script>
+    function myFxn(){
+        var num = document.getElementById("num").value;
+        window.location = "{% url 'Classes:add-classes' 12345 %}".replace(/12345/,num.toString());
+    }
+</script>
