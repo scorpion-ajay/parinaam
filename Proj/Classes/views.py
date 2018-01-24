@@ -65,6 +65,26 @@ def add_classes(request, num):
     return render(request, 'Classes/formset.html', {'formset': formset})
 
 
+def add_marks(request, classes_id, num):
+    para = int('0'+num)
+    MarksFormSet = modelformset_factory(Marks, form=MarksForm, extra=para)
+    formset = MarksFormSet(request.POST or None, request.FILES or None, queryset=Marks.objects.none())
+    classes = get_object_or_404(Classes, pk=classes_id)
+    if request.method == 'POST':
+        if formset.is_valid():
+            for f in formset:
+                cd = f.cleaned_data
+                roll = cd.get('roll')
+                marks_obt = cd.get('marks_obt')
+                Marks.objects.create(
+                    classes=classes,
+                    roll=roll,
+                    marks_obt=marks_obt,
+                )
+            return HttpResponseRedirect(reverse('Classes:marks', args=(classes_id,)))
+    return render(request, 'Classes/formset.html', {'formset': formset})
+
+
 def update_all_marks(request, classes_id):
     MarksFormset = modelformset_factory(Marks, form=MarksForm, extra=0)
     myclass = Classes.objects.get(pk=classes_id)
@@ -92,32 +112,6 @@ def marks(request, classes_id):
     classes = get_object_or_404(Classes, pk=classes_id)
     marks_qs = Marks.objects.all().filter(classes=classes_id).order_by('roll')
     return render(request, 'Classes/marks.html', {'classes': classes, 'marks_qs': marks_qs})
-
-
-def add_marks(request, classes_id):
-    form = MarksForm(request.POST or None, request.FILES or None)
-    classes = get_object_or_404(Classes, pk=classes_id)
-    if form.is_valid():
-       classes_marks = classes.marks_set.all()
-       for s in classes_marks:
-           if s.roll == form.cleaned_data.get('roll'):
-               context = {
-                   'classes': classes,
-                   'form': form,
-                   'error_message': 'you already added that roll number',
-               }
-               return render(request, 'Classes/marks_form.html', context)
-       marks = form.save(commit=False)
-       marks.classes = classes
-       marks.roll = form.cleaned_data.get('roll')
-       marks.marks_obt = form.cleaned_data.get('marks_obt')
-       marks.save()
-       return HttpResponseRedirect(reverse('Classes:marks', args=(classes_id,)))
-    context = {
-        'classes': classes,
-        'form': form,
-    }
-    return render(request, 'Classes/marks_form.html', context)
 
 
 def delete_classes(request, classes_id):

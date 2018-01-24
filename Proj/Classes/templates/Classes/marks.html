@@ -16,5 +16,13 @@
 {% else %}
     <h3>You have not any added marks yet :(</h3>
 {% endif %}
-<a href="{% url 'Classes:add-marks' classes.id %}">Add students</a>
-<a href="{% url 'Classes:update-all-marks' classes.id %}">Update all students</a>
+<label>Number of students to add : </label>
+<input type="number" id="num">
+<button onclick="myFxn()">Add marks</button><br>
+<a href="{% url 'Classes:update-all-marks' classes.id %}">Update Students</a>
+<script>
+    function myFxn(){
+        var num = document.getElementById("num").value;
+        window.location = "{% url 'Classes:add-marks' classes.id 12345 %}".replace(/12345/,num.toString());
+    }
+</script>
