@@ -1,3 +1,6 @@
+{% extends 'Classes/base.html' %}
+
+{% block body %}
 {% if classes %}
     <h2>Hello {{ user.username }}!</h2>
     <h3>Here are all the classes :)</h3>
@@ -27,3 +30,4 @@
         window.location = "{% url 'Classes:add-classes' 12345 %}".replace(/12345/,num.toString());
     }
 </script>
+{% endblock %}

@@ -1,3 +1,7 @@
+{% extends 'Classes/base.html' %}
+
+{% block title %}Parinaam | Marks{% endblock %}
+{% block body %}
 <a href="{% url 'Classes:index' %}">Go to classes</a><br>
 {% if marks_qs %}
     <ul>
@@ -26,3 +30,4 @@
         window.location = "{% url 'Classes:add-marks' classes.id 12345 %}".replace(/12345/,num.toString());
     }
 </script>
+{% endblock %}
