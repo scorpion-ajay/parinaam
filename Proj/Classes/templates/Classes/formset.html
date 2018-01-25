@@ -1,3 +1,7 @@
+{% extends 'Classes/base.html' %}
+
+{% block title %}Parinaam | Add{% endblock %}
+{% block body %}
 <form method="post" action="">
     {% csrf_token %}
     {{ formset.management_form }}
@@ -7,3 +11,4 @@
     {% endfor %}
     <button type="submit">Submit</button>
 </form>
+{% endblock %}

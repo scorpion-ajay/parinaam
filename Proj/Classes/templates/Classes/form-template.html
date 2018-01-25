@@ -1,5 +1,10 @@
+{% extends 'Classes/base.html' %}
+
+{% block title %}Parinaam | Forms{% endblock %}
+{% block body %}
 {% for field in form %}
     <label>{{ field.label_tag }}</label>
     {{ field }}
     <br>
 {% endfor %}
+{% endblock %}

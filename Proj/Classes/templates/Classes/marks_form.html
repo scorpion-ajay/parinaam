@@ -1,3 +1,7 @@
+{% extends 'Classes/base.html' %}
+
+{% block title %}Parinaam | Marks{% endblock %}
+{% block body %}
 <form action="" enctype="multipart/form-data" method="post">
     {% if error_message %}
         <h3>{{ error_message }}</h3>
@@ -6,3 +10,4 @@
     {% include 'Classes/form-template.html' %}
     <button type="submit">Submit</button>
 </form>
+{% endblock %}
