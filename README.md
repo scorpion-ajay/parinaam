@@ -12,3 +12,6 @@ It will be live sooon..
 
 # Additional Info
 I have licensed the project under MIT, so you have all the rights to improve and re-ditribute it. Do tell me your ideas for adding new features :)
+
+#### License
+MIT
