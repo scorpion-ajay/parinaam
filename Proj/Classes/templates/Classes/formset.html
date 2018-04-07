@@ -2,13 +2,34 @@
 
 {% block title %}Parinaam | Add{% endblock %}
 {% block body %}
-<form method="post" action="">
-    {% csrf_token %}
-    {{ formset.management_form }}
-    {% for form in formset %}
-        {{ form }}
-        <br>
-    {% endfor %}
-    <button type="submit">Submit</button>
-</form>
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form method="post" action="">
+                {% csrf_token %}
+                <table class="responsive">
+                    <thead>
+                        <tr>
+                            {% for field in formset.0 %}
+                                {% if not forloop.last  %}
+                                    <td>{{ field.label_tag }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for form in formset %}
+                            <tr>
+                                {% for field in form %}
+                                    <td>{{ field }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
