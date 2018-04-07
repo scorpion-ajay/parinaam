@@ -11,6 +11,20 @@ th{
     height: 50px;
 }
 
+tbody:before {
+    content: "-";
+    display: block;
+    line-height: 1em;
+    color: transparent;
+}
+
+tbody:after {
+    content: "-";
+    display: block;
+    line-height: 1em;
+    color: transparent;
+}
+
 td{
     text-align: center;
 }

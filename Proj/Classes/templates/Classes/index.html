@@ -2,15 +2,22 @@
 
 {% block body %}
 {% if classes %}
-    <h2>Hello {{ user.username }}!</h2>
     <div class="container-fluid">
         <div class="panel panel-default">
             <div class="panel-body">
-                <strong>Here are all the classes :)</strong>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <strong>Hello {{ user.username }}!</strong>
+                    </div>
+                    <div class="col-sm-6" style="text-align:right;">
+                        <strong>Here are all the classes :)</strong>
+                    </div>
+                </div>
             </div>
             <div class="panel-body">
                 <table class="responsive">
                     <thead>
+                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                         <tr>
                             <th>Discipline</th>
                             <th>Batch</th>
@@ -20,6 +27,7 @@
                             <th>Delete</th>
                             <th>Update</th>
                         </tr>
+                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                     </thead>
                     <tbody>
                         {% for class in classes %}
@@ -47,6 +55,7 @@
                             </tr>
                         {% endfor %}
                     </tbody>
+                    <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                 </table>
             </div>
         </div>
@@ -54,15 +63,15 @@
 {% else %}
     <h3>Oops, You don't have any classes :(</h3>
 {% endif %}
-    <div class="container-fluid">
-        <label>Number of classes to add : </label>
-        <input type="number" id="num">
-        <button onclick="myFxn()">Add classes</button><br>
-        <label>Want to update classes ? Update here :</label>
-        <form action="{% url 'Classes:update-classes' %}">
-            <input type="submit" value="Update Classes">
-        </form>
-    </div>
+<div class="container-fluid">
+    <label>Number of classes to add : </label>
+    <input type="number" id="num">
+    <button onclick="myFxn()">Add classes</button><br>
+    <label>Want to update classes ? Update here :</label>
+    <form action="{% url 'Classes:update-classes' %}">
+        <input type="submit" value="Update Classes">
+    </form>
+</div>
 <script>
     function myFxn(){
         var num = document.getElementById("num").value;

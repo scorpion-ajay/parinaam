@@ -7,15 +7,18 @@
         <div class="panel-body">
             <form method="post" action="">
                 {% csrf_token %}
+                {{ formset.management_form }}
                 <table class="responsive">
                     <thead>
+                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                         <tr>
                             {% for field in formset.0 %}
                                 {% if not forloop.last  %}
-                                    <td>{{ field.label_tag }}</td>
+                                    <th>{{ field.label_tag }}</th>
                                 {% endif %}
                             {% endfor %}
                         </tr>
+                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                     </thead>
                     <tbody>
                         {% for form in formset %}
@@ -26,6 +29,7 @@
                             </tr>
                         {% endfor %}
                     </tbody>
+                    <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                 </table>
                 <button type="submit">Submit</button>
             </form>

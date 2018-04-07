@@ -2,20 +2,34 @@
 
 {% block title %}Login/Register{% endblock %}
 {% block body %}
-<div class="container-fluid">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <strong>You must Login First!</strong>
+<div class="container-fluid row">
+    <div class="container-fluid col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <strong>Teachers here.</strong>
+            </div>
+            <div class="panel-body">
+                <form action="" enctype="multipart/form-data" method="post" role="form">
+                    {% csrf_token %}
+                    {% include 'Classes/form-template.html' %}
+                    <button type="submit">Submit</button>
+                    <br>
+                    <p><strong>-- OR --</strong></p>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
+                </form>
+            </div>
         </div>
-        <div class="panel-body">
-            <form action="" enctype="multipart/form-data" method="post" role="form">
-                {% csrf_token %}
-                {% include 'Classes/form-template.html' %}
-                <button type="submit">Submit</button>
-                <br>
-                <p><strong>-- OR --</strong></p>
-                <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
-            </form>
+    </div>
+    <div class="container-fluid col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <strong>Students here.</strong>
+            </div>
+            <div class="panel-body">
+                <form action="" enctype="multipart/form-data" method="post" role="form">
+                    {% csrf_token %}
+                </form>
+            </div>
         </div>
     </div>
 </div>

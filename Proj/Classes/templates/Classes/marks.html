@@ -2,19 +2,23 @@
 
 {% block title %}Parinaam | Marks{% endblock %}
 {% block body %}
-<a href="{% url 'Classes:index' %}">Go to classes</a><br>
+<div class="container-fluid">
+    <a href="{% url 'Classes:index' %}">Go to classes</a><br>
+</div>
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-body">
             {% if marks_qs %}
                 <table class="responsive">
                     <thead>
+                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                         <tr>
                             <th>Roll No</th>
                             <th>Marks</th>
                             <th>Delete</th>
                             <th>Update</th>
                         </tr>
+                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                     </thead>
                     <tbody>
                         {% for detail in marks_qs %}
@@ -34,6 +38,7 @@
                             </tr>
                         {% endfor %}
                     </tbody>
+                    <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                 </table>
             {% else %}
                 <h3>You have not any added marks yet :(</h3>
@@ -41,10 +46,15 @@
         </div>
     </div>
 </div>
-<label>Number of students to add : </label>
-<input type="number" id="num">
-<button onclick="myFxn()">Add marks</button><br>
-<a href="{% url 'Classes:update-all-marks' classes.id %}">Update Students</a>
+<div class="container-fluid">
+    <label>Number of students to add : </label>
+    <input type="number" id="num">
+    <button onclick="myFxn()">Add marks</button><br>
+    <label>Want to update students ? Update here :</label>
+    <form action="{% url 'Classes:update-all-marks' classes.id %}">
+        <input type="submit" value="Update Students">
+    </form>
+</div>
 <script>
     function myFxn(){
         var num = document.getElementById("num").value;
