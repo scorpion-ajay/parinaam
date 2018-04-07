@@ -4,8 +4,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="xunbao" />
     <orderEntry type="module" module-name="proj" />
+    <orderEntry type="module" module-name="xunbao" />
+    <orderEntry type="module" module-name="smsapp" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

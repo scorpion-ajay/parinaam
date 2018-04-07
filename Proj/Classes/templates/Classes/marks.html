@@ -3,23 +3,44 @@
 {% block title %}Parinaam | Marks{% endblock %}
 {% block body %}
 <a href="{% url 'Classes:index' %}">Go to classes</a><br>
-{% if marks_qs %}
-    <ul>
-        {% for detail in marks_qs %}
-            <li>
-                {{detail.roll}} - {{detail.marks_obt}}
-                <form action="{% url 'Classes:delete-marks' classes.id detail.id %}">
-                    <input type="submit" value="Delete">
-                </form>
-                <form action="{% url 'Classes:update-marks' classes.id detail.id %}">
-                    <input type="submit" value="Update">
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <h3>You have not any added marks yet :(</h3>
-{% endif %}
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% if marks_qs %}
+                <table class="responsive">
+                    <thead>
+                        <tr>
+                            <th>Roll No</th>
+                            <th>Marks</th>
+                            <th>Delete</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detail in marks_qs %}
+                            <tr>
+                                <td>{{detail.roll}}</td>
+                                <td>{{detail.marks_obt}}</td>
+                                <td>
+                                    <form action="{% url 'Classes:delete-marks' classes.id detail.id %}">
+                                        <input type="submit" value="Delete">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{% url 'Classes:update-marks' classes.id detail.id %}">
+                                        <input type="submit" value="Update">
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <h3>You have not any added marks yet :(</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
 <label>Number of students to add : </label>
 <input type="number" id="num">
 <button onclick="myFxn()">Add marks</button><br>
