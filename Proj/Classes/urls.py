@@ -4,8 +4,13 @@ from . import views
 app_name = 'Classes'
 
 urlpatterns = [
-    # Classes/register
+    # /login
     url(r'^login/$', views.UserFormView.as_view(), name='login'),
+
+    # logout
+    url(r'^logout/$', views.my_logout, name='logout'),
+
+    url(r'^start/$', views.home, name='home'),
 
     # /Classes/
     url(r'^$', views.index, name='index'),

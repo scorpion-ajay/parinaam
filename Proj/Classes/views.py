@@ -2,7 +2,7 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from .models import Classes, Marks
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.forms.models import modelformset_factory
 from .forms import ClassesForm, MarksForm, UserForm, AddClasses
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
@@ -10,12 +10,20 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRe
 app_name = 'Classes'
 
 
-@login_required
 def home(request):
-    return render(request, 'Classes/index.html')
+    return render(request, 'Classes/register.html')
 
 
-# Create your views here.
+def my_login(request):
+    return render(request, 'classes/registration_form.html', {})
+
+
+def my_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('Classes:index'))
+
+
+@login_required
 def index(request):
     classes = Classes.objects.all().order_by('discipline')
     return render(request, 'Classes/index.html', {'classes': classes})
