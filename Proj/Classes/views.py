@@ -1,10 +1,10 @@
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
-from .models import Classes, Marks
+from .models import Classes, Marks, Profile
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import modelformset_factory
-from .forms import ClassesForm, MarksForm, UserForm, AddClasses
+from .forms import ClassesForm, MarksForm, UserForm, ProfileForm
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 
 app_name = 'Classes'
@@ -18,9 +18,27 @@ def my_login(request):
     return render(request, 'classes/registration_form.html', {})
 
 
+@login_required
 def my_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('Classes:index'))
+
+
+@login_required
+def set_profile(request):
+    myprofile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST or None)
+        if form.is_valid():
+            cd = form.cleaned_data
+            myprofile.name = cd.get('name')
+            myprofile.phone = cd.get('phone')
+            myprofile.save()
+            return HttpResponseRedirect(reverse('Classes:index'))
+    else:
+        form = ProfileForm(request.POST or None, instance=myprofile)
+    return render(request, 'Classes/marks_form.html', {'form': form})
 
 
 @login_required
@@ -29,6 +47,7 @@ def index(request):
     return render(request, 'Classes/index.html', {'classes': classes})
 
 
+@login_required
 def update_class(request, classes_id):
     classes = get_object_or_404(Classes, pk=classes_id)
     form = ClassesForm(request.POST or None, instance=classes)
@@ -36,9 +55,10 @@ def update_class(request, classes_id):
         classes = form.save(commit=False)
         classes.save()
         return HttpResponseRedirect(reverse('Classes:index'))
-    return render(request, 'Classes/classes_form.html', {'form': form})
+    return render(request, 'Classes/marks_form.html', {'form': form})
 
 
+@login_required
 def update_classes(request):
     ClassesFormset = modelformset_factory(Classes, form=ClassesForm, extra=0)
     classes_qs = Classes.objects.all().order_by('batch')
@@ -51,8 +71,10 @@ def update_classes(request):
     return render(request, 'Classes/formset.html', {'formset': formset})
 
 
+@login_required
 def add_classes(request, num):
     para = int('0' + num)
+    myprofile = Profile.objects.get(user=request.user)
     ClassesFormSet = modelformset_factory(Classes, form=ClassesForm, extra=para)
     formset = ClassesFormSet(request.POST or None, request.FILES or None, queryset=Classes.objects.none())
     if request.method == 'POST':
@@ -64,6 +86,7 @@ def add_classes(request, num):
                 subject = cd.get('subject')
                 exam_name = cd.get('exam_name')
                 Classes.objects.create(
+                    user=myprofile,
                     batch=batch,
                     discipline=discipline,
                     subject=subject,
@@ -106,6 +129,7 @@ def update_all_marks(request, classes_id):
     return render(request, 'Classes/formset.html', {'formset': formset})
 
 
+@login_required
 def update_marks(request, classes_id, marks_id):
     marks = get_object_or_404(Marks, pk=marks_id)
     form = MarksForm(request.POST or None, instance=marks)
@@ -116,22 +140,29 @@ def update_marks(request, classes_id, marks_id):
     return render(request, 'Classes/marks_form.html', {'form': form})
 
 
+@login_required
 def marks(request, classes_id):
     classes = get_object_or_404(Classes, pk=classes_id)
     marks_qs = Marks.objects.all().filter(classes=classes_id).order_by('roll')
     return render(request, 'Classes/marks.html', {'classes': classes, 'marks_qs': marks_qs})
 
 
+@login_required
 def delete_classes(request, classes_id):
     classes = Classes.objects.get(pk=classes_id)
     classes.delete()
     return HttpResponseRedirect(reverse('Classes:index'))
 
 
+@login_required
 def delete_marks(request, classes_id, marks_id):
     marks = Marks.objects.get(pk=marks_id)
     marks.delete()
     return HttpResponseRedirect(reverse('Classes:marks', args=(classes_id,)))
+
+
+def developers(request):
+    return render(request, 'Classes/developers.html', {})
 
 
 class UserFormView(View):

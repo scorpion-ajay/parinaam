@@ -3,22 +3,27 @@
 {% block title %}Parinaam | Marks{% endblock %}
 {% block body %}
 <div class="container-fluid">
-    <a href="{% url 'Classes:index' %}">Go to classes</a><br>
-</div>
-<div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <strong>Hello {{ user.username }}!</strong>
+                </div>
+                <div class="col-sm-6" style="text-align:right;">
+                    <a href="{% url 'Classes:index' %}">Go Back to classes</a><br>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body table-responsive">
             {% if marks_qs %}
-                <table class="responsive">
+                <table class="responsive table table-striped">
                     <thead>
-                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                         <tr>
                             <th>Roll No</th>
                             <th>Marks</th>
                             <th>Delete</th>
                             <th>Update</th>
                         </tr>
-                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                     </thead>
                     <tbody>
                         {% for detail in marks_qs %}
@@ -27,18 +32,17 @@
                                 <td>{{detail.marks_obt}}</td>
                                 <td>
                                     <form action="{% url 'Classes:delete-marks' classes.id detail.id %}">
-                                        <input type="submit" value="Delete">
+                                        <input class="btn" type="submit" value="Delete">
                                     </form>
                                 </td>
                                 <td>
                                     <form action="{% url 'Classes:update-marks' classes.id detail.id %}">
-                                        <input type="submit" value="Update">
+                                        <input class="btn" type="submit" value="Update">
                                     </form>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
-                    <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                 </table>
             {% else %}
                 <h3>You have not any added marks yet :(</h3>
@@ -49,10 +53,10 @@
 <div class="container-fluid">
     <label>Number of students to add : </label>
     <input type="number" id="num">
-    <button onclick="myFxn()">Add marks</button><br>
+    <button class="btn" onclick="myFxn()">Add marks</button><br>
     <label>Want to update students ? Update here :</label>
     <form action="{% url 'Classes:update-all-marks' classes.id %}">
-        <input type="submit" value="Update Students">
+        <input class="btn" type="submit" value="Update Students">
     </form>
 </div>
 <script>

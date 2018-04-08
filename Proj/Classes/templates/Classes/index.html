@@ -14,10 +14,9 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
-                <table class="responsive">
+            <div class="panel-body table-responsive">
+                <table class="responsive table table-striped">
                     <thead>
-                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                         <tr>
                             <th>Discipline</th>
                             <th>Batch</th>
@@ -27,7 +26,6 @@
                             <th>Delete</th>
                             <th>Update</th>
                         </tr>
-                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                     </thead>
                     <tbody>
                         {% for class in classes %}
@@ -39,37 +37,36 @@
                                 <td>{{class.exam_name}}</td>
                                 <td>
                                     <form action="{% url 'Classes:marks' class.id %}">
-                                        <input type="submit" value="Open">
+                                        <input class="btn" type="submit" value="Open">
                                     </form>
                                 </td>
                                 <td>
                                     <form action="{% url 'Classes:delete-class' class.id %}">
-                                        <input type="submit" value="Delete">
+                                        <input class="btn" type="submit" value="Delete">
                                     </form>
                                 </td>
                                 <td>
                                     <form action="{% url 'Classes:update-class' class.id %}">
-                                        <input type="submit" value="Update">
+                                        <input class="btn" type="submit" value="Update">
                                     </form>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
-                    <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                 </table>
             </div>
         </div>
     </div>
 {% else %}
-    <h3>Oops, You don't have any classes :(</h3>
+    <h3>Oops,{{user.username}} You don't have any classes :(</h3>
 {% endif %}
 <div class="container-fluid">
     <label>Number of classes to add : </label>
     <input type="number" id="num">
-    <button onclick="myFxn()">Add classes</button><br>
+    <button class="btn" onclick="myFxn()">Add classes</button><br>
     <label>Want to update classes ? Update here :</label>
     <form action="{% url 'Classes:update-classes' %}">
-        <input type="submit" value="Update Classes">
+        <input class="btn" type="submit" value="Update Classes">
     </form>
 </div>
 <script>

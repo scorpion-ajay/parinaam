@@ -4,13 +4,12 @@
 {% block body %}
 <div class="container-fluid">
     <div class="panel panel-default">
-        <div class="panel-body">
+        <div class="panel-body table-responsive">
             <form method="post" action="">
                 {% csrf_token %}
                 {{ formset.management_form }}
-                <table class="responsive">
+                <table class="responsive table table-striped">
                     <thead>
-                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                         <tr>
                             {% for field in formset.0 %}
                                 {% if not forloop.last  %}
@@ -18,7 +17,6 @@
                                 {% endif %}
                             {% endfor %}
                         </tr>
-                        <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                     </thead>
                     <tbody>
                         {% for form in formset %}
@@ -29,9 +27,8 @@
                             </tr>
                         {% endfor %}
                     </tbody>
-                    <tr style="border-bottom:1px solid black"><td colspan="100%"></td></tr>
                 </table>
-                <button type="submit">Submit</button>
+                <button class="btn" type="submit">Submit</button>
             </form>
         </div>
     </div>

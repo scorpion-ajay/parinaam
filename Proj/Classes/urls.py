@@ -21,6 +21,12 @@ urlpatterns = [
     # /Classes/add-classes/
     url(r'^add-classes/(?P<num>[0-9]+)/$', views.add_classes, name='add-classes'),
 
+    # /Parinaam/dev/
+    url(r'^dev/$', views.developers, name='developers'),
+
+    # /Parinaam/profile/
+    url(r'^profile/$', views.set_profile, name='setProfile'),
+
     # /Classes/add-marks/
     url(r'^(?P<classes_id>[0-9]+)/(?P<num>[0-9]+)/$', views.add_marks, name='add-marks'),
 

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Classes, Marks
+from .models import Classes, Marks, Profile
 
 
 class UserForm(forms.ModelForm):
@@ -9,6 +9,13 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+
+
+class ProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ['name', 'phone']
 
 
 class ClassesForm(forms.ModelForm):
@@ -23,7 +30,3 @@ class MarksForm(forms.ModelForm):
     class Meta:
         model = Marks
         fields = ['roll', 'marks_obt']
-
-
-class AddClasses(forms.Form):
-    num = forms.IntegerField(label='Add number of classes to be added..')

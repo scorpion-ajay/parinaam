@@ -1,6 +1,8 @@
 {% extends 'Classes/base.html' %}
 
 {% block title %}Login/Register{% endblock %}
+{% block loga %}<a href="{% url 'social:begin' 'google-oauth2' %}">{% endblock %}
+{% block log %}Login with google{% endblock %}
 {% block body %}
 <div class="container-fluid row">
     <div class="container-fluid col-sm-6">
@@ -8,15 +10,18 @@
             <div class="panel-body">
                 <strong>Teachers here.</strong>
             </div>
+            <p style="border-bottom:1px solid black"></p>
             <div class="panel-body">
                 <form action="" enctype="multipart/form-data" method="post" role="form">
                     {% csrf_token %}
                     {% include 'Classes/form-template.html' %}
-                    <button type="submit">Submit</button>
-                    <br>
-                    <p><strong>-- OR --</strong></p>
-                    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
+                    <button class="btn" type="submit">Submit</button>
+                    <br><br>
                 </form>
+            </div>
+            <p style="border-bottom:1px solid black"></p>
+            <div class="panel-body">
+                <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
             </div>
         </div>
     </div>
@@ -25,10 +30,19 @@
             <div class="panel-body">
                 <strong>Students here.</strong>
             </div>
+            <p style="border-bottom:1px solid black"></p>
             <div class="panel-body">
-                <form action="" enctype="multipart/form-data" method="post" role="form">
-                    {% csrf_token %}
-                </form>
+                <p class="font-weight-light responsive">
+                    Hey there!
+                    Hope you are doing  great. Just press  below link to
+                    select  teacher  and  then  choose according to your
+                    class and exam. In case you  feel any  issue, please
+                    drop  me  an email  at  :  scorpion.ajay1@gmail.com.
+                </p>
+            </div>
+            <p style="border-bottom:1px solid black"></p>
+            <div class="panel-body">
+                <a href="#">Check Result</a>
             </div>
         </div>
     </div>
